@@ -1,6 +1,6 @@
-import Foundation
+import UIKit
 
-public class ToGrayScale: FilterUtils {
+public class ToGrayScale: Filter {
 	
 	public override init() {
 		super.init()
@@ -12,25 +12,28 @@ public class ToGrayScale: FilterUtils {
 		case Strong
 		}
 	
-	public func turnToGrayScale(anImg: RGBAImage) -> RGBAImage {
+	public func applyFilter(anImg: UIImage) -> UIImage {
 		
-		var newImage = anImg
-		var pixel = newImage.pixels
+		var newImage = RGBAImage(image: anImg)
 		
-		for index in 0..<newImage.pixels.count {
+		var pixel = newImage!.pixels
+		
+		for index in 0..<newImage!.pixels.count {
 			let pixelAvg = getPixelAvgVal(pixel[index], AlphaOn: false)
 			pixel[index].red = pixelAvg
 			pixel[index].green = pixelAvg
 			pixel[index].blue = pixelAvg
-			newImage.pixels[index] = pixel[index]
+			newImage!.pixels[index] = pixel[index]
 		}
-		return newImage
+		let outputImage = newImage!.toUIImage()
+
+		return outputImage!
 	}
 	
-	public func turnToGrayScale(anImg: RGBAImage, intensity: Intensity) -> RGBAImage {
+	public func applyFilter(anImg: UIImage, intensity: Intensity) -> UIImage {
 		
-		var newImage = anImg
-		var pixel = newImage.pixels
+		var newImage = RGBAImage(image: anImg)
+		var pixel = newImage!.pixels
 		var factor: Float
 		
 		switch intensity {
@@ -42,16 +45,18 @@ public class ToGrayScale: FilterUtils {
 			factor = 1
 		}
 		
-		for index in 0..<newImage.pixels.count {
+		for index in 0..<newImage!.pixels.count {
 			let pixelAvg = getPixelAvgVal(pixel[index], AlphaOn: false)
 			pixel[index].red = UInt8(Float(pixelAvg) * factor + Float(pixel[index].red) * (1 - factor))
 			pixel[index].green = UInt8(Float(pixelAvg) * factor + Float(pixel[index].green) * (1 - factor))
 			pixel[index].blue = UInt8(Float(pixelAvg) * factor + Float(pixel[index].blue) * (1 - factor))
 			pixel[index].alpha = UInt8(Float(pixelAvg) * factor + Float(pixel[index].alpha) * (1 - factor))
 			
-			newImage.pixels[index] = pixel[index]
+			newImage!.pixels[index] = pixel[index]
 		}
-		return newImage
+		let outputImage = newImage!.toUIImage()
+		
+		return outputImage!
 	}
 	
 }

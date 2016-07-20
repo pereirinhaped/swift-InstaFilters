@@ -1,10 +1,14 @@
-import Foundation
+import UIKit
 
-public class FilterUtils: NSObject {
+public class Filter: NSObject {
 	
 	public override init() {
 		super.init()
 	}
+	
+	
+	// Public methods to apply filters with or without intensity selection
+	
 	
 	// Auxiliary method to calculate average channel values for entire image
 	
