@@ -1,13 +1,41 @@
-//: Playground - noun: a place where people can play
+/*
+ * Code by Pedro Pereirinha
+ * iOS App Development with Swift Spec 
+ *	   by University of Toronto
+ * Introduction To Swift Programming
+ *  Final - Peer Graded Assignment
+ */
+
 
 import UIKit
 
-let image = UIImage(named: "sample")
+let image = RGBAImage(image: UIImage(named: "sample")!)
+let filterArray: [ImageTransform.FiltersToApply: Filters.Intensity]
 
-// Process the image!
+/* Choose filters to apply by choosen order with respective intensity
+ * Available filters:
+ * - GrayScale
+ * - Transparency
+ * - ShapeContrast
+ * - LowKey
+ * - HiKey
+ *
+ * Available intensities:
+ * - Low
+ * - Medium
+ * - Strong
+ */
 
-// Apply ToGrayScale Filter
-let filteredImg1 = ToGrayScale().applyFilter(image!)
-let filteredImg2 = ToGrayScale().applyFilter(image!, intensity: .Strong)
-let filteredImg3 = ToGrayScale().applyFilter(image!, intensity: .Medium)
-let filteredImg4 = ToGrayScale().applyFilter(image!, intensity: .Low)
+// Exemple Filter Chain: GrayScale/Medium -> Contrast/ High -> HiKey/Low
+
+filterArray = [
+	.GrayScale: .Strong,
+	.Contrast: .Medium ,
+	.HighKey: .Low
+	]
+
+// Print Original Image
+let originalImage = UIImage(named: "sample")
+
+// Print Processed Image
+let processedImage = ImageTransform(tgtImg: image!, filterArray: filterArray).process()

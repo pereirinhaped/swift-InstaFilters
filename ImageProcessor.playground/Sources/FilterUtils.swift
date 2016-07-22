@@ -1,6 +1,14 @@
+/*
+ * Code by Pedro Pereirinha
+ * iOS App Development with Swift Spec
+ *	   by University of Toronto
+ * Introduction To Swift Programming
+ *  Final - Peer Graded Assignment
+ */
+
 import UIKit
 
-public class Filter: NSObject {
+public class FilterUtils: NSObject {
 	
 	public override init() {
 		super.init()
@@ -8,6 +16,30 @@ public class Filter: NSObject {
 	
 	
 	// Public methods to apply filters with or without intensity selection
+	
+	// Auxiliary method to calculate overal image average value
+	
+	public func getOverallAverage(image: RGBAImage) -> UInt8 {
+		
+		let totalPixels = image.pixels.count
+		var pixel = image.pixels
+		
+		var totalRed: Int = 0
+		var totalGreen: Int = 0
+		var totalBlue: Int = 0
+		var totalAlpha: Int = 0
+		
+		for index in 0..<totalPixels {
+			totalRed += Int(pixel[index].red)
+			totalGreen += Int(pixel[index].green)
+			totalBlue += Int(pixel[index].blue)
+			totalAlpha += Int(pixel[index].alpha)
+		}
+		
+		let averageValue: UInt8 = UInt8((totalRed/totalPixels + totalGreen/totalPixels + totalBlue/totalPixels) / 3)
+		
+		return averageValue
+	}
 	
 	
 	// Auxiliary method to calculate average channel values for entire image
